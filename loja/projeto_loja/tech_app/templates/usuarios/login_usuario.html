@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Login</title>
+</head>
+<body>
+    <nav style="background-color:lightblue !important;" class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Login - TechInfo</span>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="email_usuario" class="form-label">Email</label>
+                <input name="email_usuario" type="email" class="form-control" id="email_usuario" required>
+            </div>
+            <div class="mb-3">
+                <label for="senha_usuario" class="form-label">Senha</label>
+                <input name="senha_usuario" type="password" class="form-control" id="senha_usuario" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+            {% if user.is_superuser %}
+                <a href="{% url 'admin_home' %}" class="btn btn-primary">Acessar Administração</a>
+            {% endif %}
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

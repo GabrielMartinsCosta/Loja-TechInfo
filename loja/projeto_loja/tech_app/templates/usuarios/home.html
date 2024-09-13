@@ -1,0 +1,81 @@
+<!-- home.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechInfo - Tela Inicial</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+        }
+        .product-card h5 {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav style="background-color: lightblue !important;" class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container"> 
+            <a class="navbar-brand" href="#">TechInfo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white" href="{% url 'cadastro' %}">Cadastrar-se</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-secondary text-white ml-2" href="{% url 'login' %}">Entrar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Bem-vindo ao TechInfo</h1>
+                <p>Sua plataforma de produtos eletrônicos.</p>
+            </div>
+        </div>
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for produto in produtos %}
+            <div class="col">
+              <div class="card h-100">
+                <img src="{{ produto.imagem.url }}" class="card-img-top" alt="{{ produto.nome }}">
+                <div class="card-body">
+                  <h5 class="card-title">{{ produto.nome }}</h5>
+                  <p class="card-text">{{ produto.descricao }}</p>
+                  <p class="card-text"><strong>Preço: R$ {{ produto.preco }}</strong></p>
+                  <p class="card-text"><strong>Estoque: {{ produto.quantidade }}</strong></p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

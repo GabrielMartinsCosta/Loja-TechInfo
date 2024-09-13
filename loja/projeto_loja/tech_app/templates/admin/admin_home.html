@@ -1,0 +1,67 @@
+<!-- admin_home.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Produtos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+        }
+        .list-group-item {
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: .25rem;
+        }
+        .list-group-item .row {
+            align-items: center;
+        }
+        .list-group-item .col {
+            padding: 10px;
+        }
+        .list-group-item img {
+            max-width: 100px;
+            height: auto;
+        }
+        .list-group-item .col.text-right {
+            display: flex;
+            align-items: center;
+        }
+        .btn-sm {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Administração de Produtos</h1>
+        <a href="{% url 'adicionar_produto' %}" class="btn btn-success mb-3">Adicionar Novo Produto</a>
+        <a href="{% url 'logout_teste' %}" class="btn btn-danger mb-3 float-right">Sair</a>
+        <ul class="list-group">
+            {% for produto in produtos %}
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col">
+                        <h4>{{ produto.nome }}</h4>
+                        <p class="mb-1">Preço: R$ {{ produto.preco }}</p>
+                        <!-- Adicionar imagem do produto -->
+                        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="img-thumbnail">
+                    </div>
+                    <div class="col text-right">
+                        <a href="{% url 'editar_produto' produto.id %}" class="btn btn-primary btn-sm">Editar</a>
+                        <a href="{% url 'excluir_produto' produto.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Scripts do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

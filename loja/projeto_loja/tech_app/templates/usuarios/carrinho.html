@@ -1,0 +1,103 @@
+<!-- carrinho.html -->
+{% load static %}
+{% load carrinho_extras %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechInfo - Carrinho</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav style="background-color: lightblue !important;" class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container"> 
+            <a class="navbar-brand" href="#">TechInfo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white" href="{% url 'logout_teste' %}">Sair</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-success text-white ml-2" href="{% url 'carrinho' %}">Carrinho</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Seu Carrinho</h1>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Preço Unitário</th>
+                            <th>Total</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in carrinho_items %}
+                        <tr>
+                            <td>{{ item.produto.nome }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'atualizar_quantidade' item.id %}">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantidade" value="{{ item.quantidade }}" min="1" required>
+                                    <button type="submit" class="btn btn-primary btn-sm">Atualizar</button>
+                                </form>
+                            </td>
+                            <td>R$ {{ item.produto.preco }}</td>
+                            <td>R$ {{ item.produto.preco|multiply:item.quantidade }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'remover_do_carrinho' item.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Remover</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                            <td><strong>R$ {{ subtotal }}</strong></td>
+                            <td></td>  <!-- Coluna vazia para alinhamento -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-12 text-right">
+                <a href="{% url 'home_logado' %}" class="btn btn-secondary">Voltar Pagina</a>
+                <form method="POST" action="{% url 'finalizar_compra' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Finalizar Compra</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
