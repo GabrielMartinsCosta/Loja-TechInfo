@@ -1,3 +1,5 @@
+# Loja TechInfo - Python e Django
+
 Projeto realizado durante o curso de Desenvolvimento de Software
 A proposta do trabalho foi criar um sistema de uma loja virtual fictícia
 a estrutura do projeto foi idealizada em Python com o suporte do Django para a criação do esqueleto do sistema
